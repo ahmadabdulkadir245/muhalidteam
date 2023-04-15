@@ -114,7 +114,9 @@ function Navigation() {
                 <div
                   className=' flex items-center '
                 >
-                   <button className="capitalize w-[80px] md:w-[120px] h-[40px] rounded-md text-white bg-black hover:bg-gray-500 transition-all duration-500 linear " >Register</button>
+                   <button className="capitalize w-[80px] md:w-[120px] h-[40px] rounded-md text-white bg-black hover:bg-gray-500 transition-all duration-500 linear " 
+                   onClick={() => router.push('/signup')}
+                   >Register</button>
             
                 </div>
               </div>
