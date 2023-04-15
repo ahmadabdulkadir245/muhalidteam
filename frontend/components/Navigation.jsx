@@ -62,7 +62,7 @@ function Navigation() {
 {/* sidebar menu */}
 <SideBar openSideBar={openSideBar} showSearch={showSearch} />
     {/* navigation */}
-  <nav className={`flex items-center justify-between flex-wrap bg-gray-50 py-4 ${showSearch ? '': 'shadow-lg'}  lg:shadow-lg px-[10px] lg:px-[50px] `}>
+  <nav className={`flex items-center justify-between flex-wrap bg-gray-50 py-4  shadow-md lg:shadow-lg px-[10px] lg:px-[50px] `}>
   
     {/* Logo */}
     <div className="flex items-center space-x-2">
@@ -77,54 +77,45 @@ function Navigation() {
                 )}
       
       </div>
-      <div className="text-xl lg:text-2xl font-changa text-gray-500 cursor-pointer" onClick={() => router.push("/")}>
-      AERO<span className='text-yellow-500'>SMART</span>
+      <div className="text-xl lg:text-2xl font-changa text-gray-900 cursor-pointer capitalize" onClick={() => router.push("/")}>
+      Muhalid <span className=''>team</span>
       </div>
       
       </div>
 
      {/* search for Desktop */}
-              <div className='hidden lg:flex items-center  h-10 rounded-md max-w-3xl flex-grow cursor-pointer bg-yellow-500  hover:bg-[#f7b32b] transition-all duration-500 linear'>
+              <div className='hidden lg:flex items-center  h-10 rounded-full max-w-3xl flex-grow cursor-pointer bg-black  hover:bg-gray-500 transition-all duration-500 linear '>
                 <input
                   type='text'
-                  className='py-5 px-4 h-full w-6 flex-grow  flex-shrink rounded-l-sm focus:outline-none bg-gray-300 font-play text-gray-700'
-                  placeholder='search on Aerosmart'
+                  className='py-5 px-4 h-full w-6 flex-grow  flex-shrink rounded-l-full focus:outline-none bg-gray-300 font-play text-gray-700 text-xs'
+                  placeholder='Enter your pin here'
                   onChange={searchHandler}
                 />
-                <BiSearchAlt className='h-12 w-12 p-3  text-gray-500 transition duration-200 ease-in' 
-                onClick={searchIconHandler}
-                />
+
+                <p className='text-xs px-3 font-changa text-white'>
+                Display Anwser
+                </p>
                 
               </div>
 
                  {/*  Right*/}
-                 <div className='flex text-gray-500 text-xs  space-x-5 lg:space-x-12  whitespace-nowrap px-4 lg:px-'>
+                 <div className='flex items-center text-gray-500 text-xs  space-x-5 lg:space-x-12  whitespace-nowrap  lg:px-'>
                 <div className='flex space-x space-x-6 items-center'>
-                  <BiSearchAlt
-                    className={`  lg:hidden w-6 h-6 lg:w-7 lg:h-7 ${showSearch ? 'hidden': ''}`}
-                onClick={showSearchHandler}
-                  />
                   <Link href='/login'>
                      <div className='hover:text-[#f7b32b] transition-all duration-500 linear'>
                         <RiUser3Line className='w-6 h-6 lg:w-7 lg:h-5 ' />
                      <p className='hidden lg:inline font-semiold md:text-xs font-titilliumWeb link'>
-                    Sign In
+                    Login
                   </p>
                   </div>
                   </Link>
                 </div>
 
                 <div
-                  onClick={() => router.push("/cart")}
-                  className='link flex items-center relative '
+                  className=' flex items-center '
                 >
-                  <span className='absolute -top-1 -right-1 md:right-10 h-4 text-xs w-4 bg-yellow-400 rounded-full  text-center font-semibold items-center font-titilliumWeb transition-all duration-500 linear animate-pingOnce' key={productInCart.length} >
-                    {productInCart.length}
-                  </span>
-                  <AiOutlineShoppingCart className='w-6 h-6 lg:w-7 lg:h-7' />
-                  <p className='hidden lg:inline font-semibold md:text-sm font-titilliumWeb'>
-                    Cart
-                  </p>
+                   <button className="capitalize w-[80px] md:w-[120px] h-[40px] rounded-md text-white bg-black hover:bg-gray-500 transition-all duration-500 linear " >Register</button>
+            
                 </div>
               </div>
 
