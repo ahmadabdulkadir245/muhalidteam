@@ -32,8 +32,8 @@ export const AuthContextProvider = ({children}) => {
             }
           };
         const res = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, graphqlQuery)
-        // router.push('/')
-        router.back()
+        router.push('/')
+        // router.back()
         setInputs({
           email: '',
           password: '',
