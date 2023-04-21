@@ -126,8 +126,8 @@ const passwordIsEqual = inputs.password === inputs.confirmPassword;
    </Head>
 
       <h2 className="sm:mt-24 md:mt-0 text-2xl text-center font-bold mb-2  ">Sign Up</h2>
-      {error && <p className="text-red-500 text-xs lg:text-lg text-center">{error}</p>}
-      {success && <p className="text-green-500 text-xs lg:text-lg text-center font-poppins">{success}</p>}
+      {error && <p className="text-red-500 text-xs text-center">{error}</p>}
+      {success && <p className="text-green-500 text-xs text-center font-poppins">{success}</p>}
       <form onSubmit={submitHandler}>
       <input
               type='email'

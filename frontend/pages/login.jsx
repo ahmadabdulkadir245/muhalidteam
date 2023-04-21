@@ -107,7 +107,7 @@ function Login() {
          <h2 className="text-2xl text-center font-bold mb-2">Welcome Back
          </h2>
 
-        {error && <p className="text-red-500 text-xs lg:text-lg text-center">{error}</p>}
+        {error && <p className="text-red-500 text-xs text-center">{error}</p>}
 
        <form onSubmit={submitHandler}>
          <input
