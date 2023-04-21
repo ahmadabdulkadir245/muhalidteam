@@ -9,6 +9,8 @@ import { BsBricks } from 'react-icons/bs'
 import { useRecoilState } from 'recoil'
 import { navState } from '../atoms/navHandler'
 import { useRouter } from 'next/navigation'
+import { useContext } from 'react'
+import { AuthContext } from '../context/authContext'
 
 function SideBarLinks() {
   const [openSideBar, setOpenSideBar] = useRecoilState(navState);
@@ -17,30 +19,31 @@ function SideBarLinks() {
     setOpenSideBar(false)
     router.push(`${path}`)
   }
+  const {logout, authToken} = useContext(AuthContext)
+  const logoutHandler = () => {
+    logout()
+      router.push('/login')
+    setOpenSideBar(false)
+  }
   return (
     <div className='px-[10px] py-[6px] pb-8 text-gray-500 capitalize text-md h-full overflow-y-scroll'>
-        <div className='flex justify-between '>
+        {/* <div className='flex justify-between '>
             <button className='rounded-md border-2 border-gray-400 py-2 w-[47%]' onClick={closeNav.bind(this, '/login')} >
               Login
             </button>
             <button className='rounded-md border-2 border-gray-400 py-2 w-[47%]' onClick={closeNav.bind(this, '/signup')}>
               Sign Up
               </button>
-        </div>
-        <hr className='h-[1px] w-full mt-4 mb-2 bg-gray-500 '/>
+        </div> */}
+        {/* <hr className='h-[1px] w-full mt-4 mb-2 bg-gray-500 '/> */}
 
 
-        <SideBarLink Icon={RiUser3Line} title={'my account'} path={'/'}/>
-        <SideBarLink Icon={AiOutlineShop} title={'orders'} path={'/checkout'}/>
-        <SideBarLink Icon={AiOutlineShoppingCart} title={'cart'} path={'/cart'}/>
-        <SideBarLink Icon={GiWoodBeam} title={'woods'} path={'/'}/>
-        <SideBarLink Icon={MdConstruction} title={'metals'} path={'/'}/>
-        <SideBarLink Icon={GiConcreteBag} title={'cement'} path={'/'}/>
-        <SideBarLink Icon={GiOpeningShell} title={'stones'} path={'/'}/>
-        <SideBarLink Icon={BsBricks} title={'bricks'} path={'/'}/>
-        <SideBarLink Icon={MdAdminPanelSettings} title={'add product'} path={'/admin/add-product'}/>
-        <SideBarLink Icon={MdAdminPanelSettings} title={'add banner image'} path={'/admin/add-banner'}/>
-        <SideBarLink Icon={BsBricks} title={'admin products'} path={'/admin/products'}/>
+        {authToken &&
+        <>
+        <SideBarLink Icon={MdAdminPanelSettings} title={'add answer'} path={'/admin/add-answer'}/>
+        <SideBarLink Icon={BsBricks} title={'admin answers'} path={'/admin/answers'}/>
+        </>
+      }
     </div>
   )
 }

@@ -15,7 +15,7 @@ export const AuthContextProvider = ({children}) => {
     const [userId, setUserId] = useState(null)
     const [authToken, setAuthToken] = useState(null)
 
-    const login = async (inputs, setInputs, setError) => {
+    const login = async (inputs, setInputs, setError, setLoading) => {
       try{
         const graphqlQuery = {
             query: `
@@ -34,13 +34,16 @@ export const AuthContextProvider = ({children}) => {
         const res = await axios.post(process.env.NEXT_PUBLIC_GRAPHQL_URL, graphqlQuery)
         router.push('/')
         // router.back()
+        setLoading(false)
         setInputs({
           email: '',
           password: '',
         })
         setUserId(res.data.data.login.userId)
         setAuthToken(res.data.data.login.token)
+        localStorage.setItem('token', res.data.data.login.token);
        }catch(err) {
+        setLoading(false)
          setError(err.response.data.errors[0].message)
          setTimeout(() => {
            setError(null)
@@ -49,8 +52,10 @@ export const AuthContextProvider = ({children}) => {
     }
 
     const logout = async () => {
-     await axios.post(process.env.NEXT_PUBLIC_LOGOUT_URL)
+    //  await axios.post(process.env.NEXT_PUBLIC_LOGOUT_URL)
     setCurrenctUser(null)
+    setAuthToken(null)
+    setUserId(null)
     }
 
     useEffect(() => {
@@ -58,7 +63,7 @@ export const AuthContextProvider = ({children}) => {
     }, [currentUser])
     
     return  (
-    <AuthContext.Provider value={{currentUser, login, logout, authToken}}>{children}
+    <AuthContext.Provider value={{currentUser, login, logout, authToken, userId}}>{children}
     </AuthContext.Provider>)
 }
 

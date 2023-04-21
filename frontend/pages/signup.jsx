@@ -12,6 +12,7 @@ import { FcGoogle } from "react-icons/fc";
 import { RiEye2Fill, RiEyeCloseFill, RiEyeLine, RiEyeOffFill, RiFacebookFill } from "react-icons/ri";
 import Head from "next/head";
 import axios from "axios";
+import Loading from "../components/Loading";
 
 function Signup() {
   const auth = getAuth(app);
@@ -28,6 +29,7 @@ function Signup() {
   };
 
 const [error, setError] = useState(null)
+const [loading, setLoading] = useState(false)
 const [success, setSuccess] = useState(null)
 const [passwordVissble, setPasswordVissible] = useState(false)
 const [confirmpasswordVissble, setConfirmPasswordVissible] = useState(false)
@@ -63,6 +65,7 @@ const passwordIsEqual = inputs.password === inputs.confirmPassword;
   }
   const submitHandler = async (e) => {
     e.preventDefault()
+    setLoading(true)
     let graphqlQuery = {
       query: `
       mutation CreateUser($email: String!, $password: String!) {
@@ -84,6 +87,7 @@ const passwordIsEqual = inputs.password === inputs.confirmPassword;
           // console.log(res.data.data.createUser.email)
           if(res.data.data.createUser.email == "false") {
             // return console.log("User exist")
+            setLoading(false)
             return setError("Email has been registered")
           }
           setSuccess("Registered Successful redirecting to login")
@@ -92,6 +96,7 @@ const passwordIsEqual = inputs.password === inputs.confirmPassword;
             password: '',
             confirmPassword: ''
           })
+          setLoading(false)
           setTimeout(() => {
             router.push('/login')
           }, 3000)
@@ -99,13 +104,18 @@ const passwordIsEqual = inputs.password === inputs.confirmPassword;
         catch(err) {
           console.log(err)
           setError(err)
+          setLoading(false)
         }
       }
       else {
+        setLoading(false)
         setError('Invalid email or password do not match')
       }
     }
 
+    if(loading) {
+      return <Loading/>
+    }
 
   return (
     <div className="py-10 md:py-0 grid grid-cols-1 place-content-center overflow-y-scroll xs:h-screen xs:palce-items-center xs:my-0  scrollbar-hide  text-gray-700 max-w-4xl m-auto text-sm">
@@ -118,7 +128,7 @@ const passwordIsEqual = inputs.password === inputs.confirmPassword;
       <h2 className="sm:mt-24 md:mt-0 text-2xl text-center font-bold mb-2  ">Sign Up</h2>
       {error && <p className="text-red-500 text-xs lg:text-lg text-center">{error}</p>}
       {success && <p className="text-green-500 text-xs lg:text-lg text-center font-poppins">{success}</p>}
-      <form>
+      <form onSubmit={submitHandler}>
       <input
               type='email'
               className='border-[1px] lg:border-[1px] rounded-lg  border-gray-500] outline-none px-4 py-[16px] w-[90%]  m-auto flex my-5 lg:my-5'
@@ -167,13 +177,15 @@ const passwordIsEqual = inputs.password === inputs.confirmPassword;
                  }
               </div>
 
-        </form>
 
         <Link href="/forgot-password">
          <p  className="text-[#2F89FC] capitalize text-center font-poppins">forgot password?</p>
         </Link>
 
-        <button className="capitalize w-[90%] h-[48px] rounded-md text-white bg-[#0E64D2] block mt-4 m-auto" onClick={submitHandler}>Signup</button>
+        <button type="submit" className="capitalize w-[90%] h-[48px] rounded-md text-white bg-[#0E64D2] block mt-4 m-auto" 
+        // onClick={submitHandler}
+        >Signup</button>
+        </form>
 
         <p className="font-poppins text-center mt-4">Dont have an account?
         <Link href="/login" className="font-poppins text-[#2F89FC] ml-4">Login</Link>

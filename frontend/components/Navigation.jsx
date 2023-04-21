@@ -5,7 +5,7 @@ import { MdClear } from "react-icons/md";
 import SideBar from "./SideBar"
 import {  AiOutlineShoppingCart} from "react-icons/ai";
 import Link from 'next/link';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import router from 'next/router'
 import { useRecoilState } from 'recoil';
 import { navState } from '../atoms/navHandler';
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectedcartItems } from '../slices/cartSlice';
 import { addSearchedWord } from '../slices/searchSlice';
 import MobileNav from './MobileNav';
+import { AuthContext } from '../context/authContext';
 // import SearchSuggesstions from './SearchSuggesstions';
 
 
@@ -27,7 +28,17 @@ function Navigation() {
     const closeNavHandler = () => {
       setOpenSideBar(false);
     };
+    const {logout, authToken} = useContext(AuthContext)
   const [showSearch, setShowSearch] = useState(false);
+
+      useEffect(() => {
+        if(authToken) {
+          setShowSearch(true)
+
+        }
+      }, [authToken])
+      
+
 
   const showSearchHandler = () => {
       setShowSearch(!showSearch)
@@ -55,6 +66,13 @@ function Navigation() {
       return router.push(`/search/${suggesstion}`)
     }
   }
+
+  const logoutHandler = () => {
+    router.push('/login')
+    logout()
+    // setOpenSideBar(false)
+  }
+
   const productInCart = useSelector(selectedcartItems)
 
   return (
@@ -84,23 +102,24 @@ function Navigation() {
       </div>
 
      {/* search for Desktop */}
+     {authToken && 
               <div className='hidden lg:flex items-center  h-10 rounded-full max-w-3xl flex-grow cursor-pointer bg-black  hover:bg-gray-500 transition-all duration-500 linear '>
                 <input
                   type='text'
                   className='py-5 px-4 h-full w-6 flex-grow  flex-shrink rounded-l-full focus:outline-none bg-gray-300 font-play text-gray-700 text-xs'
                   placeholder='Enter your pin here'
                   onChange={searchHandler}
-                />
+                  />
 
                 <p className='text-xs px-3 font-changa text-white'>
                 Display Anwser
                 </p>
-                
               </div>
+                }
 
                  {/*  Right*/}
-                 <div className='flex items-center text-gray-500 text-xs  space-x-5 lg:space-x-12  whitespace-nowrap  lg:px-'>
-                <div className='flex space-x space-x-6 items-center'>
+                 <div className={`flex items-center text-gray-500 text-xs  space-x-5 lg:space-x-12  whitespace-nowrap  lg:px-`}>
+                <div className={`${authToken ? 'hidden' : 'flex'}   space-x space-x-6 items-center`}>
                   <Link href='/login'>
                      <div className='hover:text-[#f7b32b] transition-all duration-500 linear'>
                         <RiUser3Line className='w-6 h-6 lg:w-7 lg:h-5 ' />
@@ -114,9 +133,15 @@ function Navigation() {
                 <div
                   className=' flex items-center '
                 >
+                  {authToken ?  
+                  <button className="capitalize w-[80px] md:w-[120px] h-[40px] rounded-md text-white bg-black hover:bg-gray-500 transition-all duration-500 linear " 
+                  onClick={logoutHandler}
+                  >Logout</button>
+                  : 
                    <button className="capitalize w-[80px] md:w-[120px] h-[40px] rounded-md text-white bg-black hover:bg-gray-500 transition-all duration-500 linear " 
                    onClick={() => router.push('/signup')}
                    >Register</button>
+                } 
             
                 </div>
               </div>

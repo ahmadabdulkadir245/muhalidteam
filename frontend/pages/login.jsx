@@ -13,6 +13,7 @@ import Head from "next/head";
 import { RiEyeCloseFill, RiEyeLine, RiFacebookFill } from "react-icons/ri";
 import {AuthContext} from '../context/authContext'
 import axios from "axios";
+import Loading from "../components/Loading";
 
 function Login() {
   const auth = getAuth(app);
@@ -28,6 +29,7 @@ function Login() {
   };
 
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const [passwordVissble, setPasswordVissible] = useState(false)
   const [inputs, setInputs] = useState({
     email: '',
@@ -72,7 +74,8 @@ function Login() {
       e.preventDefault()
       // if (emailIsValid && passwordIsValid ) {
         try{
-        login(inputs, setInputs, setError)
+          setLoading(true)
+        login(inputs, setInputs, setError, setLoading)
         }catch(err) {
           console.log(err)
           
@@ -85,6 +88,11 @@ function Login() {
   //   }
   // }, []);
 
+  if(loading) {
+    return <Loading/>
+  }
+
+
   return (
   <div className="relative ">
     
@@ -96,11 +104,12 @@ function Login() {
          </Head>
          
         <h2 className="sm:mt-24 md:mt-0 text-2xl text-center font-bold mb-2  ">Login</h2>
-         <h2 className="text-2xl text-center font-bold mb-2">Welcome Back To Muhalid Team
+         <h2 className="text-2xl text-center font-bold mb-2">Welcome Back
          </h2>
 
         {error && <p className="text-red-500 text-xs lg:text-lg text-center">{error}</p>}
-       <form >
+
+       <form onSubmit={submitHandler}>
          <input
                  type='email'
                  className='border-[0.5px] lg:border-[1px] rounded-lg  border-gray-500] outline-none px-4 py-[16px] w-[90%]  m-auto flex my-5 lg:my-5'
@@ -129,13 +138,16 @@ function Login() {
               <RiEyeCloseFill className="h-4 w-5 cursor-pointer" onClick={() => setPasswordVissible(!passwordVissble)}/>
                  }
               </div>
-           </form>
    
            <Link href="/forgot-password">
             <p  className="text-[#2F89FC] capitalize text-center font-poppins">forgot password?</p>
            </Link>
    
-           <button className="capitalize w-[90%] h-[48px] rounded-md text-white bg-[#0E64D2] block mt-4 m-auto" onClick={submitHandler}>login</button>
+           <button type="submit"
+            className="capitalize w-[90%] h-[48px] rounded-md text-white bg-[#0E64D2] block mt-4 m-auto" 
+            //  onClick={submitHandler}
+            >login</button>
+            </form>
    
            <p className="font-poppins text-center mt-4">Dont have an account?
            <Link href="/signup" className="font-poppins text-[#2F89FC] ml-4">Signup</Link>

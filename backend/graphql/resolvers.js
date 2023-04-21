@@ -1,10 +1,9 @@
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
-const Product = require('../models/product');
-const Banner = require('../models/banner_image');
 const User = require('../models/user');
-const db = require('../util/database')
+// const Answer = require('../../backend/models/answer');
+const Answer = require('../models/answer')
 
 
 module.exports = {
@@ -48,8 +47,9 @@ module.exports = {
      hashedPw, '');
 
     await user.save();
+
     return {
-      id: '',
+      id: user.id,
       email: user.email,
       password: user.password,
       isAdmin: user.isAdmin
@@ -81,139 +81,70 @@ module.exports = {
     );
     return { token: token, userId: user.id };
   },
-    createProduct: async function({ productInput }, req) {
+  createAnswer: async function({ answerInput }, req) {
+    const answer = new Answer(null, answerInput.exam, answerInput.subject, answerInput.answer, answerInput.userId)
+    await answer.save()
+    return {
+      id: answer.id,
+      exam: answer.exam,
+      subject: answer.subject,
+      answer: answer.answer,
+      userId: answer.userId
+    }
+},
+  updateAnswer: async function({ id, answerInput }, req) {
+    const answer = new Answer(null, answerInput.exam, answerInput.subject, answerInput.answer, answerInput.userId)
+    await answer.updateById(id)
+    return {
+      id: id,
+      exam: answer.exam,
+      subject: answer.subject,
+      answer: answer.answer,
+      userId: answer.userId
+    }
+},
+answers: async function({ page, perPage }, req) {
+  if (!page) {
+    page = 1;
+  }
+  // const productPerPage = perPage
+  const offset =  (page - 1 ) * perPage 
+  const answers = await Answer.findAndCountAll(perPage, offset).then(([rows, fieldData]) => {
+    return rows
+  })
+  .catch(err => console.log(err));
 
-        const product = new Product(null, productInput.title, productInput.imageUrl, productInput.description, productInput.price, productInput.category, productInput.quantity, 1);
+  const totalAnswers = await Answer.fetchAll().then(([rows, fieldData]) => {
+    return rows
+  })
+  .catch(err => console.log(err));
 
-         await product.save()
-    
-        return {
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          imageUrl: product.imageUrl,
-          description: product.description,
-          category: product.category,
-          quantity: product.quantity,
-          creator: 1,
-          // createdAt: createdProduct.createdAt.toISOString(),
-          // updatedAt: createdProduct.updatedAt.toISOString()
-        };
-      },
+  const totalPages = Math.ceil(totalAnswers.length / perPage);
 
-      products: async function({ page, perPage }, req) {
-        if (!page) {
-          page = 1;
-        }
-        // const productPerPage = perPage
-        const offset =  (page - 1 ) * perPage 
-        
-        const products = await Product.findAndCountAll(perPage, offset).then(([rows, fieldData]) => {
-          return {data: rows}
-        })
-        .catch(err => console.log(err));
-
-        const totalProducts = await Product.fetchAll().then(([rows, fieldData]) => {
-          return rows
-        })
-        .catch(err => console.log(err));
-
-        const totalPosts = 5
-        const totalPages = Math.ceil(totalProducts.length / perPage);
-        console.log(totalPages);
-        
-        return {
-          products: products.data.map(product => {
-            return {
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                category: product.category,
-                quantity: product.quantity,
-                imageUrl: product.imageUrl,
-                description: product.description,
-                createdAt: product.createdAt.toISOString(),
-                updatedAt: product.updatedAt.toISOString()
-            };
-          }),
-          totalProducts: totalPages
-        };
-      },
-      product: async function({ id }, req) {
-        const product = await   Product.findById(id)
-        .then(([product]) => {
-          return product[0]
-        })
-        .catch(err => console.log(err))
-
-        // if (!product) {
-        //   const error = new Error('No post found!');
-        //   error.code = 404;
-        //   throw error;
-        // }
-        return {  
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          imageUrl: product.imageUrl,
-          description: product.description,
-          createdAt: product.createdAt.toISOString(),
-          updatedAt: product.updatedAt.toISOString()
-        };
-      },
-
-      createBanner: async function({ bannerInput }, req) {
- 
-        const banner = new Banner(null,  bannerInput.category,bannerInput.image ,1);
-
-         await banner.save()
-    
-        return {
-          id: banner.id,
-          category: banner.category,
-          image: banner.image,
-          userId: 1,
-        };
-      },
-
-      banners: async function( req) {
-        const banners = await Banner.fetchAll() .then(([rows, fieldData]) => {
-          return rows
-        })
-        .catch(err => console.log(err));
-        return {
-          banners: banners.map(banner => {
-            return {
-                id: banner.id,
-                category: banner.category,
-                image: banner.image,
-                userId: banner.userId,
-                // createdAt: banner.createdAt.toISOString(),
-                // updatedAt: banner.updatedAt.toISOString()
-            };
-          }),
-        };
-      },
-      deleteProduct: async function( {id}, req) {
-         Product.deleteById(id);
-        return true
-      },
-      updateProduct: async function ({id, productInput}, req) {
-        const product = new Product(null, productInput.title, productInput.imageUrl, productInput.description, productInput.price, productInput.category, productInput.quantity, 1);
-
-         await product.updateById(id)
-    
-        return {
-          id: id,
-          title: product.title,
-          price: product.price,
-          imageUrl: product.imageUrl,
-          description: product.description,
-          category: product.category,
-          quantity: product.quantity,
-          creator: 1,
-          // createdAt: createdProduct.createdAt.toISOString(),
-          // updatedAt: createdProduct.updatedAt.toISOString()
-        };
+  return {
+    answers: answers.map(answer => {
+      return {
+        id: answer.id,
+        exam: answer.exam,
+        subject: answer.subject,
+        userId: answer.userId,
+        answer: answer.answer
       }
+    }),
+    totalPages: totalPages
+  }
+},
+answer: async function({ id }, req) {
+  const answer = await Answer.findById(id)
+  .then(([answer]) => {
+    return answer[0]
+  })
+  .catch(err => console.log(err))
+  return {
+    id: answer.id,
+    exam: answer.exam,
+    subject: answer.subject,
+    answer: answer.answer
+  }
+}
 }
