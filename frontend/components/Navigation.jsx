@@ -30,11 +30,13 @@ function Navigation() {
     };
     const {logout, authToken} = useContext(AuthContext)
   const [showSearch, setShowSearch] = useState(false);
+  console.log(authToken)
 
       useEffect(() => {
         if(authToken) {
           setShowSearch(true)
-
+        }else {
+          setShowSearch(false)
         }
       }, [authToken])
       
@@ -68,7 +70,7 @@ function Navigation() {
   }
 
   const logoutHandler = () => {
-    router.push('/login')
+    // router.push('/login')
     logout()
     // setOpenSideBar(false)
   }
@@ -102,7 +104,7 @@ function Navigation() {
       </div>
 
      {/* search for Desktop */}
-     {authToken && 
+     {authToken  && 
               <div className='hidden lg:flex items-center  h-10 rounded-full max-w-3xl flex-grow cursor-pointer bg-black  hover:bg-gray-500 transition-all duration-500 linear '>
                 <input
                   type='text'

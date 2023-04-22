@@ -3,7 +3,7 @@ function PaymentMethod() {
   return (
     <div className="bg-gray-300 my-5 rounded-md p-[25px]">
         <h2 className="text-xl font-poppins uppercase text-center mb-1
-        ">Payment Method</h2>
+        ">Payment Methods</h2>
 
     <div className="mt-3">  
         <h3 className="uppercase font-semibold font-poppins underline mb-2

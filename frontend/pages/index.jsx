@@ -6,6 +6,9 @@ import { useEffect, useState, useContext } from 'react'
 import {AuthContext} from '../context/authContext'
 import Homepage from '../components/Homepage'
 import JambSection from '../components/JambSection'
+import NecoSection from '../components/NecoSection'
+import NebtedSection from '../components/NebtedSection'
+import Warning from '../components/Warning'
 
 
 export default function Home({products}) {
@@ -33,6 +36,9 @@ export default function Home({products}) {
       <Header/>
       <Homepage/>
       <JambSection/>
+      <NecoSection/>
+      <NebtedSection/>
+      <Warning/>
       <Footer/>
      </main>
     </div>

@@ -49,12 +49,6 @@ function AminAnswers() {
       })
   }, [page])
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 3000)
-  }, [loading])
-
   if(loading) {
     return <Loading/>
   }

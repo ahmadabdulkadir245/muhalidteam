@@ -34,6 +34,7 @@ import Loading from "../../components/Loading";
 import { AuthContext } from '../../context/authContext';
 
 
+
 function AddQuestion() {
     const [answer, setAnswer] = useState({
       exam: '',
@@ -50,9 +51,10 @@ function AddQuestion() {
       message: ''
     })
     const [isUpdate, setIsUpdate] = useState(false)
-    const {userId} = useContext(AuthContext)
+    const {authToken, userId} = useContext(AuthContext)
     const router = useRouter()
     const {prodId, exam, subject, prevAns} = router.query;
+    console.log(userId)
 
 
     useEffect(() => {
@@ -105,7 +107,7 @@ function AddQuestion() {
         })
         .then(result => {
           setAnswer({
-            exam: "none",
+            exam: "",
             subject: "",
           })
           setContent("")
@@ -117,12 +119,12 @@ function AddQuestion() {
             message: 'Question & Answer Added Successfully redirecting to Admin Answer'
           })
           setTimeout(() => {
-            router.push('/admin/answers')
+            router.back()
             setMessage({
               state: false,
               message: ''
             })
-          }, 8000);
+          }, 7000);
         })
         .catch(err => {
           setLoading(false)
@@ -178,7 +180,7 @@ function AddQuestion() {
         })
         .then(result => {
           setAnswer({
-            exam: "none",
+            exam: "",
             subject: "",
           })
           setContent("")
@@ -190,12 +192,13 @@ function AddQuestion() {
             message: 'Question & Answer Updated Successfully redirecting to Admin Answer'
           })
           setTimeout(() => {
-            router.push('/admin/answers')
+          
+            router.back()
             setMessage({
               state: false,
               message: ''
             })
-          }, 8000);
+          }, 7000);
         })
         .catch(err => {
           setLoading(false)
@@ -214,10 +217,13 @@ function AddQuestion() {
     }
   }
 
+  // if(!authToken) {
+  //   return router.push('/login')
+  // }
+
     if(loading) {
       return <Loading/>
     }
-  
 
   return (
     <div>
@@ -232,9 +238,8 @@ function AddQuestion() {
       {error !== '' &&  <p className="text-center text-xs text-red-400 mt-2 mb-2 transition-all duration-300 ease-out">{error} </p>}
          <form  className="px-[10px]" onSubmit={isUpdate ? updateAnswerHandler : addAnswerHandler}>
 
-      <select name="exam" id="" className='bg-gray-200 lg:border-[1px] rounded-lg  outline-none px-4 py-[16px] w-full  m-auto flex mb-5 lg:my-5'
-        placeholder='product category' onClick={answerHandler} value={answer.exam} required>
-          <option value="none">select exam</option>
+      <select name="exam" id="" className='bg-gray-200 lg:border-[1px] rounded-lg  outline-none px-4 py-[16px] w-full  m-auto flex mb-5 lg:my-5' value={answer.exam} onChange={answerHandler} required>
+          <option value="">select exam</option>
           <option value="JAMB">JAMB</option>
           <option value="NECO">NECO</option>
           <option value="WAEC">WAEC</option>

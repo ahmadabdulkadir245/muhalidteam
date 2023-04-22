@@ -146,5 +146,9 @@ answer: async function({ id }, req) {
     subject: answer.subject,
     answer: answer.answer
   }
-}
+},
+deleteAnswer: async function( {id}, req) {
+  Answer.deleteById(id);
+ return true
+},
 }
