@@ -2,6 +2,7 @@
 import {TbCurrencyNaira} from "react-icons/tb"
 import Gaurantee from "./Gaurantee"
 import PaymentMethod from "./PaymentMethod"
+import NebTedTimetable from "./NebTedTimetable"
 function NebtedSection() {
   return (
     <div className="px-[10px] md:px-[25px] lg:px-[100px] m-auto mt-8 lg:mt-10 ">
@@ -90,6 +91,8 @@ function NebtedSection() {
                 Once Again Do not Be Deceived By Other Site Or WhatsApp People Or Groups Promising And Telling Stories They will give you Fake Answers.
                 For Your Own Good Kindly Subscribe To Us For 100% Assurances. Tell Your Friends About Us www.muhalidteam.netlify.app
                 You Can Never Compare Us With Kids Sending You Wrong And Any How Solutions Without Verification! Be Wise And Rush To Us!!!!!`} />
+
+                <NebTedTimetable/>
         </div>
         
     </div>

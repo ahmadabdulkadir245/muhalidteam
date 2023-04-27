@@ -2,6 +2,7 @@
 import {TbCurrencyNaira} from "react-icons/tb"
 import Gaurantee from "./Gaurantee"
 import PaymentMethod from "./PaymentMethod"
+import WaecTimetable from "./WaecTimetable"
 function Homepage() {
   return (
     <div className="px-[10px] md:px-[25px] lg:px-[100px] m-auto mt-8 lg:mt-10 ">
@@ -92,6 +93,9 @@ function Homepage() {
                 You Can Never Compare Us With Kids Sending You Wrong And Any How Solutions Without Verification! Be Wise And Rush To Us!!!!!`} />
 
         <PaymentMethod/>
+
+      <WaecTimetable />
+        
         </div>
         
     </div>

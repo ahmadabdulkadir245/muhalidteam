@@ -9,6 +9,7 @@ import JambSection from '../components/JambSection'
 import NecoSection from '../components/NecoSection'
 import NebtedSection from '../components/NebtedSection'
 import Warning from '../components/Warning'
+import WaecTimetable from '../components/WaecTimetable'
 
 
 export default function Home({products}) {
