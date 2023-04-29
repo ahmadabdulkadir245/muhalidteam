@@ -3,9 +3,10 @@ import {TbCurrencyNaira} from "react-icons/tb"
 import Gaurantee from "./Gaurantee"
 import PaymentMethod from "./PaymentMethod"
 import WaecTimetable from "./WaecTimetable"
+import Timetable from "./Timetable"
 function Homepage() {
   return (
-    <div className="px-[10px] md:px-[25px] lg:px-[100px] m-auto mt-8 lg:mt-10 ">
+    <div className="px-[10px] md:px-[25px] lg:px-[100px] m-auto mt-8 lg:mt-10">
         <div>
         <h1 className="text-center text-lg lg:text-2xl font-poppins underline">
         2023 WAEC NIGHT ANSWERS RESOURCES
@@ -93,9 +94,8 @@ function Homepage() {
                 You Can Never Compare Us With Kids Sending You Wrong And Any How Solutions Without Verification! Be Wise And Rush To Us!!!!!`} />
 
         <PaymentMethod/>
-
-      <WaecTimetable />
-        
+        <Timetable/>
+            
         </div>
         
     </div>

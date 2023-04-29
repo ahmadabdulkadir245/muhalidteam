@@ -2,8 +2,10 @@
 function WaecTimetable() {
   return (
     <div className="bg-gray-300 my-5 rounded-md p-[25px]">
-        WAEC 2023 TIMETABLE (UPDATED  VERSION)
-<br /> <br /><br />
+          <h2 className="text-xl font-poppins uppercase text-center mb-1
+        ">WAEC 2023 TIMETABLE (UPDATED  VERSION)</h2>
+        
+<br /> 
 <div className="text-xs">
 Monday, 8th May, 2023 <br /> <br /><br />
 Foods and Nutrition 3 (Practical) Planning Session – 09:30am – 10:30 am

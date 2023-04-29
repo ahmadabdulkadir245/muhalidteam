@@ -2,8 +2,10 @@
 function NebTedTimetable() {
   return (
     <div className="bg-gray-300 my-5 rounded-md p-[25px]">
-        2023   NABTEB MAY/JUNE NBC/NTC EXAMINATION TIMETABLE
-<br /> <br />
+         <h2 className="text-xl font-poppins uppercase text-center mb-1
+        ">2023   NABTEB MAY/JUNE NBC/NTC EXAMINATION TIMETABLE</h2>
+        
+<br />
 <div className="text-xs">
 Monday, 26th June 2023 
 <br /> <br /> 

@@ -92,7 +92,6 @@ function NebtedSection() {
                 For Your Own Good Kindly Subscribe To Us For 100% Assurances. Tell Your Friends About Us www.muhalidteam.netlify.app
                 You Can Never Compare Us With Kids Sending You Wrong And Any How Solutions Without Verification! Be Wise And Rush To Us!!!!!`} />
 
-                <NebTedTimetable/>
         </div>
         
     </div>
