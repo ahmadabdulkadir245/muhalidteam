@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-// const Answer = require('../../backend/models/answer');
 const Answer = require('../models/answer')
 
 
@@ -44,7 +43,7 @@ module.exports = {
   
     const hashedPw = await bcrypt.hash(userInput.password, 12);
     const user = new User(null, userInput.email,
-     hashedPw, '');
+     hashedPw, '', null);
 
     await user.save();
 
@@ -147,8 +146,51 @@ answer: async function({ id }, req) {
     answer: answer.answer
   }
 },
+users: async function({ page, perPage }, req) {
+  if (!page) {
+    page = 1;
+  }
+  // const productPerPage = perPage
+  const offset =  (page - 1 ) * perPage 
+  const users = await User.findAndCountAll(perPage, offset).then(([rows, fieldData]) => {
+    return rows
+  })
+  .catch(err => console.log(err));
+
+  const totalUsers = await User.fetchAll().then(([rows, fieldData]) => {
+    return rows
+  })
+  .catch(err => console.log(err));
+
+  const totalPages = Math.ceil(totalUsers.length / perPage);
+
+  return {
+    users: users.map(user => {
+      return {
+        id: user.id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        examPassword: user.examPassword,
+      }
+    }),
+    totalPages: totalPages
+  }
+},
+updateUser: async function({ id, userInput }, req) {
+  const user = new User(id, null, null, userInput.isAdmin, userInput.examPassword)
+  await user.updateById(id)
+  return {
+    id: id,
+    isAdmin: user.isAdmin,
+    examPassword: user.examPassword,
+  }
+},
 deleteAnswer: async function( {id}, req) {
   Answer.deleteById(id);
+ return true
+},
+deleteUser: async function( {id}, req) {
+  User.deleteById(id);
  return true
 },
 }

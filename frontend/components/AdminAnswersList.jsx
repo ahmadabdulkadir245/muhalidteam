@@ -59,7 +59,6 @@ function AdminAnswersList({key, id, exam, subject , answer, setLoading}) {
         <button className="capitalize w-[90%] h-[38px] rounded-sm  border-[1px]  bg-transparent  m-auto tracking-wide cursor-pointer hover:bg-green-600 hover:text-white transition-all duration-300 ease-in-out">EDIT</button>
         </Link>
         </div>
-        
         <button className="capitalize w-[90%] h-[38px] rounded-sm  border-[1px] bg-transparent  m-auto tracking-wide cursor-pointer hover:bg-red-600 hover:text-white transition-all duration-300 ease-in-out" onClick={deleteHandler.bind(this, id)}>DELETE</button>
         </div>
         <div className="w-full h-[1px] bg-gray-300 col-span-full"></div>

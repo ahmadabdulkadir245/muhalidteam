@@ -42,6 +42,8 @@ function SideBarLinks() {
         <>
         <SideBarLink Icon={MdAdminPanelSettings} title={'add answer'} path={'/admin/add-answer'}/>
         <SideBarLink Icon={BsBricks} title={'admin answers'} path={'/admin/answers'}/>
+        <SideBarLink Icon={BsBricks} title={'admin users'} path={'/admin/users'}/>
+        <SideBarLink Icon={BsBricks} title={'admin add users'} path={'/admin/add-user'}/>
         </>
       }
     </div>
